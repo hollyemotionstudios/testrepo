@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Social Post</title>
+  <style>
+    :root { --bg: #f4f4f4; --card: #fff; --text: #111; --muted: #6b6b6b; --line: #e6e6e6; --placeholder: #f4f4f4; --dash: #bbb; --like: #e5484d; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0f0f0f; --card: #1a1a1a; --text: #f2f2f2; --muted: #9a9a9a; --line: #2a2a2a; --placeholder: #232323; --dash: #444; }
+    }
+    html, body { height: 100%; margin: 0; }
+    body { display: grid; place-items: center; padding: 16px; box-sizing: border-box; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    .post { width: min(480px, 100%); background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+    .post-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; flex: none; display: grid; place-items: center; background: linear-gradient(135deg, #ff7a59, #a259ff); color: #fff; font-weight: 700; }
+    .who { flex: 1; min-width: 0; line-height: 1.25; }
+    .name { font-weight: 600; }
+    .meta { color: var(--muted); font-size: 0.875rem; }
+    .text { margin: 0; padding: 0 16px 14px; line-height: 1.45; }
+    /* Image placeholder: drop an <img src="..."> inside to replace the label */
+    .image-placeholder { aspect-ratio: 4 / 3; display: grid; place-items: center; margin: 0 16px; border: 2px dashed var(--dash); border-radius: 12px; background: var(--placeholder); color: var(--muted); overflow: hidden; }
+    .image-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+    .actions { display: flex; gap: 4px; padding: 8px 8px 10px; }
+    .actions button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border: 0; border-radius: 999px; background: none; color: var(--muted); font: inherit; font-size: 0.875rem; cursor: pointer; }
+    .actions button:hover { background: var(--placeholder); color: var(--text); }
+    .actions .share { margin-left: auto; }
+    .like[aria-pressed="true"] { color: var(--like); }
+    .like[aria-pressed="true"] svg { fill: currentColor; }
+    svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+</head>
+<body>
+  <article class="post">
+    <header class="post-header">
+      <div class="avatar" aria-hidden="true">H</div>
+      <div class="who">
+        <div class="name">Holly</div>
+        <div class="meta">@hollyemotion · 2h</div>
+      </div>
+    </header>
+
+    <p class="text">Hello World! First post from the new site. 👋</p>
+
+    <div class="image-placeholder">Image placeholder</div>
+
+    <footer class="actions">
+      <button class="like" aria-pressed="false" aria-label="Like">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-8-4.6-8-10.6A4.4 4.4 0 0 1 12 7a4.4 4.4 0 0 1 8 2.9c0 6-8 10.6-8 10.6z"/></svg>
+        <span class="count">128</span>
+      </button>
+      <button aria-label="Comment">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>
+        <span>24</span>
+      </button>
+      <button aria-label="Repost">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg>
+        <span>6</span>
+      </button>
+      <button class="share" aria-label="Share">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10 14"/><path d="M21 3l-7 18-4-7-7-4 18-7z"/></svg>
+      </button>
+    </footer>
+  </article>
+
+  <script>
+    const like = document.querySelector('.like');
+    const count = like.querySelector('.count');
+    like.addEventListener('click', () => {
+      const on = like.getAttribute('aria-pressed') !== 'true';
+      like.setAttribute('aria-pressed', on);
+      count.textContent = Number(count.textContent) + (on ? 1 : -1);
+    });
+  </script>
+</body>
+</html>
